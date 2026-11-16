@@ -6,7 +6,7 @@
 
 A faithful XFCE/Termux:X11 port of [Prayag2's KDE Modern Clock](https://github.com/Prayag2/kde_modernclock).
 
-This is **not a generic lookalike clock**. The rendered three-row layout, bundled typefaces, default typography, letter spacing, date/time formatting, colours, and style-character output follow the upstream applet. The Plasma-only shell is replaced with a transparent, frameless Qt Quick window so the same design can run on XFCE without installing KDE Plasma.
+This is **not a generic lookalike clock**. The rendered three-row layout, bundled typefaces, default typography, letter spacing, date/time formatting, colours, and style-character output follow the upstream applet. The Plasma-only shell is replaced with a frameless transparent Qt Quick window so the same design can run on XFCE without installing KDE Plasma.
 
 ## What matches the original
 
@@ -20,25 +20,26 @@ This is **not a generic lookalike clock**. The rendered three-row layout, bundle
 | Text colour | White |
 | Column spacing | 5 px |
 
-The original Anurati and Poppins font files are fetched directly from Prayag2's upstream repository during installation. The original upstream QML is Plasma-specific; this port preserves its presentation and defaults while replacing only the Plasma data source and applet container with standard Qt Quick.
+The original Anurati and Poppins font files are fetched directly from Prayag2's upstream repository during installation.
 
 ## Install
 
 Designed for Termux + `proot-distro` + Debian 13 + XFCE + Termux:X11.
 
-Clone this repository in Termux, then run:
-
 ```bash
 bash install.sh
 ```
 
-The installer installs Debian's Qt 6 QML runtime, fetches the original fonts, installs the Qt Quick clock, creates an XFCE autostart entry, and launches it in the current session.
+The installer installs Debian's Qt 6 QML runtime, fetches the original fonts, installs the clock, creates an XFCE autostart entry, and launches it in the current session.
 
-## Position and customization
+## Position and transparency
 
-- Drag the clock with the mouse to reposition it.
-- Edit `~/.local/share/modern-gaming-clock/config.js` as the Debian `prime` user to change visibility, font sizes, letter spacing, colours, date format, 12/24-hour mode, and style character.
-- The default desktop placement is near the upper-right corner. Change `window_margin_right` and `window_margin_top` in `config.js` to adjust its initial position.
+- The clock opens horizontally and vertically centered on the screen.
+- The QML window background is transparent; only the clock text is drawn.
+- Drag the clock to reposition it.
+- Edit `~/.local/share/modern-gaming-clock/config.js` as Debian user `prime`. Set `center_offset_x` or `center_offset_y` to adjust the initial centered position.
+
+Transparency is rendered through Qt's transparent X11 window. The final compositing behavior depends on Termux:X11/XFWM and the active desktop configuration; no compositor is installed by this project.
 
 ## Uninstall
 
@@ -50,8 +51,8 @@ This removes the QML clock, its autostart entry, and the previous Conky approxim
 
 ## Attribution and licensing
 
-The design, original QML structure, and font assets originate from [Prayag2/kde_modernclock](https://github.com/Prayag2/kde_modernclock) by Prayag Jain. See [NOTICE.md](NOTICE.md) for attribution and upstream licensing notes. The project follows GPLv3; see [LICENSE](LICENSE).
+The design and font assets originate from [Prayag2/kde_modernclock](https://github.com/Prayag2/kde_modernclock) by Prayag Jain. See [NOTICE.md](NOTICE.md) for attribution and upstream licensing notes. The project follows GPLv3; see [LICENSE](LICENSE).
 
-## Platform limitations
+## Platform boundary
 
-This port uses the same typography and content layout, but it is not the Plasma applet itself. KDE's applet shadow/background frame and Plasma configuration UI are replaced by a frameless XFCE desktop window and an editable config file. Transparency and desktop stacking depend on Termux:X11/XFWM support. No compositor or KDE Plasma session is installed.
+The typography, content layout and default output follow the upstream applet. The Plasma applet frame/shadow and Plasma settings dialog are replaced by a transparent frameless XFCE window and editable config file.
