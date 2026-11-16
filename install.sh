@@ -30,7 +30,7 @@ echo "== Installing Qt 6 QML runtime for Debian XFCE =="
 proot-distro login --isolated debian -- /bin/bash -lc '
   export DEBIAN_FRONTEND=noninteractive
   apt-get update
-  apt-get install -y qml-qt6 qml6-module-qtquick qml6-module-qtquick-window x11-utils git
+  apt-get install -y qml-qt6 qml6-module-qtquick qml6-module-qtquick-window git
   command -v qml
 '
 
