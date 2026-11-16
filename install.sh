@@ -61,6 +61,7 @@ pkill -u "$(id -u)" -f "conky.*primebook-modernclock.conf" 2>/dev/null || true
 rm -f "$HOME/.config/autostart/primebook-modernclock.desktop"
 rm -f "$HOME/.config/conky/modern-gaming-clock.conf"
 rm -f "$HOME/.config/conky/primebook-modernclock.conf"
+pkill -u "$(id -u)" -f "$APP_DIR/main.qml" 2>/dev/null || true
 
 cat > "$APP_DIR/main.qml" <<'QML'
 import QtQuick 2.15
