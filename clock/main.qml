@@ -10,11 +10,17 @@ import "config.js" as Config
 Window {
     id: root
     title: "Modern Gaming Clock"
-    visible: true
-    color: "transparent"
+    visible: false
+    color: "#00000000"
     flags: Qt.Window | Qt.FramelessWindowHint | Qt.Tool
 
     property date currentDate: new Date()
+
+    // Create the native X11 window only after its transparent clear colour is set.
+    Component.onCompleted: {
+        root.color = Qt.rgba(0, 0, 0, 0)
+        root.show()
+    }
 
     width: clockColumn.implicitWidth + 2
     height: clockColumn.implicitHeight + 2
