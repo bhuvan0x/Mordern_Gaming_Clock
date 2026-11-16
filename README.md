@@ -1,45 +1,53 @@
 # Mordern Gaming Clock
 
-A lightweight digital desktop clock for XFCE, designed for dark gaming setups and WhiteSur Dark/Blue desktops.
+A faithful XFCE/Termux:X11 port of [Prayag2's KDE Modern Clock](https://github.com/Prayag2/kde_modernclock).
 
-This is an XFCE-native clock inspired by the visual idea of KDE Plasma clock widgets. It does not require KDE Plasma.
+This is **not a generic lookalike clock**. The rendered three-row layout, bundled typefaces, default typography, letter spacing, date/time formatting, colours, and style-character output follow the upstream applet. The Plasma-only shell is replaced with a transparent, frameless Qt Quick window so the same design can run on XFCE without installing KDE Plasma.
 
-## Features
-- Large 24-hour digital time
-- Uppercase weekday and full date
-- White typography with a cool blue accent
-- Transparent desktop layer using Conky
-- XFCE autostart for the unprivileged `prime` account
-- No additional compositor or desktop environment
+## What matches the original
 
-## Target environment
-Termux + proot-distro + Debian + XFCE + Termux:X11. This installer is not a generic Linux installer.
+| Element | Upstream default |
+|---|---|
+| Day | Anurati, 72 px, 17 px letter spacing, uppercase |
+| Date | Poppins, 19 px, 3 px letter spacing, `dd MMM yyyy`, uppercase |
+| Time | Poppins, 19 px, 3 px letter spacing |
+| Time format | 12-hour with AM/PM |
+| Style character | `-` on both sides of the time |
+| Text colour | White |
+| Column spacing | 5 px |
+
+The original Anurati and Poppins font files are fetched directly from Prayag2's upstream repository during installation. The original upstream QML is Plasma-specific; this port preserves its presentation and defaults while replacing only the Plasma data source and applet container with standard Qt Quick.
 
 ## Install
-Clone this repository in Termux and run:
+
+Designed for Termux + `proot-distro` + Debian 13 + XFCE + Termux:X11.
+
+Clone this repository in Termux, then run:
 
 ```bash
 bash install.sh
 ```
 
-The installer adds Debian's `conky-all` and `fonts-noto-core`, writes the configuration to `/home/prime/.config/conky/`, adds XFCE autostart, and launches the clock.
+The installer installs Debian's Qt 6 QML runtime, fetches the original fonts, installs the Qt Quick clock, creates an XFCE autostart entry, and launches it in the current session.
+
+## Position and customization
+
+- Drag the clock with the mouse to reposition it.
+- Edit `~/.local/share/modern-gaming-clock/config.js` as the Debian `prime` user to change visibility, font sizes, letter spacing, colours, date format, 12/24-hour mode, and style character.
+- The default desktop placement is near the upper-right corner. Change `window_margin_right` and `window_margin_top` in `config.js` to adjust its initial position.
 
 ## Uninstall
+
 ```bash
 bash install.sh --remove
 ```
-This removes the clock process, configuration and autostart entry. Conky remains installed in case another configuration uses it.
 
-## Customize
-Edit `~/.config/conky/modern-gaming-clock.conf` as the Debian `prime` user. Adjust `alignment`, `gap_x`, `gap_y`, font sizes and hex colours. Restart with:
+This removes the QML clock, its autostart entry, and the previous Conky approximation's files. It does not remove shared Qt packages.
 
-```bash
-pkill -u "$(id -u)" -x conky || true
-conky --daemonize --config="$HOME/.config/conky/modern-gaming-clock.conf"
-```
+## Attribution and licensing
 
-## Limitations
-Transparency depends on X11 ARGB visual support. Without a compositor, true background blur and animated effects are unavailable; this project intentionally avoids installing one.
+The design, original QML structure, and font assets originate from [Prayag2/kde_modernclock](https://github.com/Prayag2/kde_modernclock) by Prayag Jain. See [NOTICE.md](NOTICE.md) for attribution and upstream licensing notes. This port's integration scripts and QML adaptation are distributed under GPL-3.0-or-later; see [LICENSE](LICENSE).
 
-## License
-GPL-3.0-or-later. See [LICENSE](LICENSE).
+## Platform limitations
+
+This port uses the same typography and content layout, but it is not the Plasma applet itself. KDE's applet shadow/background frame and Plasma configuration UI are replaced by a frameless XFCE desktop window and an editable config file. Transparency and desktop stacking depend on Termux:X11/XFWM support. No compositor or KDE Plasma session is installed.
