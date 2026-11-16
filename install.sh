@@ -70,22 +70,22 @@ import "config.js" as Config
 
 /*
  * XFCE host for Prayag2's KDE Modern Clock presentation.
- * The three text rows, fonts, default sizes, spacing, letter spacing,
- * date/time formats and style-character output mirror the upstream applet.
+ * Original typography and output are retained; the host window is
+ * frameless, transparent and initially centered on the X11 screen.
  */
 Window {
     id: root
     title: "Modern Gaming Clock"
     visible: true
     color: "transparent"
-    flags: Qt.Window | Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnBottomHint
+    flags: Qt.Window | Qt.FramelessWindowHint | Qt.Tool
 
     property date currentDate: new Date()
 
     width: clockColumn.implicitWidth + 2
     height: clockColumn.implicitHeight + 2
-    x: Screen.width - width - Config.window_margin_right
-    y: Config.window_margin_top
+    x: Math.round((Screen.width - width) / 2) + Config.center_offset_x
+    y: Math.round((Screen.height - height) / 2) + Config.center_offset_y
 
     FontLoader {
         id: fontAnurati
@@ -97,7 +97,7 @@ Window {
     }
 
     Timer {
-        interval: 60000
+        interval: 1000
         running: true
         repeat: true
         triggeredOnStart: true
@@ -148,7 +148,7 @@ Window {
         }
     }
 
-    // Drag the transparent clock window to reposition it on the desktop.
+    // Drag the clock; it starts centered and can be repositioned manually.
     MouseArea {
         anchors.fill: parent
         z: 10
@@ -169,7 +169,7 @@ QML
 cat > "$APP_DIR/config.js" <<'CONFIG'
 .pragma library
 
-// These defaults match package/contents/config/main.xml in Prayag2/kde_modernclock.
+// Defaults match package/contents/config/main.xml in Prayag2/kde_modernclock.
 var show_day = true
 var day_font_size = 72
 var day_letter_spacing = 17
@@ -188,9 +188,9 @@ var time_font_color = "#FFFFFF"
 var use_24_hour_format = false
 var time_character = "-"
 
-// XFCE desktop placement (not part of the original Plasma applet's typography).
-var window_margin_right = 64
-var window_margin_top = 104
+// XFCE host placement: zero offsets put the clock at screen centre.
+var center_offset_x = 0
+var center_offset_y = 0
 CONFIG
 
 cat > "$APP_DIR/start.sh" <<'START'
