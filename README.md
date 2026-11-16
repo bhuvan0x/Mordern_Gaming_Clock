@@ -1,5 +1,9 @@
 # Mordern Gaming Clock
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Prayag2/kde_modernclock/main/assets/ss.png" alt="Original Prayag2 Modern Clock appearance" width="760">
+</p>
+
 A faithful XFCE/Termux:X11 port of [Prayag2's KDE Modern Clock](https://github.com/Prayag2/kde_modernclock).
 
 This is **not a generic lookalike clock**. The rendered three-row layout, bundled typefaces, default typography, letter spacing, date/time formatting, colours, and style-character output follow the upstream applet. The Plasma-only shell is replaced with a transparent, frameless Qt Quick window so the same design can run on XFCE without installing KDE Plasma.
@@ -46,7 +50,7 @@ This removes the QML clock, its autostart entry, and the previous Conky approxim
 
 ## Attribution and licensing
 
-The design, original QML structure, and font assets originate from [Prayag2/kde_modernclock](https://github.com/Prayag2/kde_modernclock) by Prayag Jain. See [NOTICE.md](NOTICE.md) for attribution and upstream licensing notes. This port's integration scripts and QML adaptation are distributed under GPL-3.0-or-later; see [LICENSE](LICENSE).
+The design, original QML structure, and font assets originate from [Prayag2/kde_modernclock](https://github.com/Prayag2/kde_modernclock) by Prayag Jain. See [NOTICE.md](NOTICE.md) for attribution and upstream licensing notes. The project follows GPLv3; see [LICENSE](LICENSE).
 
 ## Platform limitations
 
