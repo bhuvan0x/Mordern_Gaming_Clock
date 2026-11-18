@@ -10,7 +10,6 @@ command -v proot-distro >/dev/null 2>&1 || {
   echo "Run this from Termux with proot-distro installed." >&2
   exit 1
 }
-SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ "$ACTION" == --remove ]]; then
   proot-distro login --isolated --user prime debian -- /bin/bash -lc '
@@ -29,7 +28,7 @@ proot-distro login --isolated debian -- /bin/bash -lc '
   apt-get update
   apt-get install -y qml-qt6 qml6-module-qtquick qml6-module-qtquick-window \
     qml6-module-qtquick-controls qml6-module-qt-labs-settings \
-    python3-pil xfconf git
+    python3-pil xfconf git curl
   command -v qml6
 '
 
@@ -52,8 +51,6 @@ proot-distro login --isolated --user prime debian -- /bin/bash -s <<'DEBIAN'
 set -Eeuo pipefail
 APP_DIR="$HOME/.local/share/modern-gaming-clock"
 AUTOSTART="$HOME/.config/autostart"
-mkdir -p "$APP_DIR" "$AUTOSTART" "$HOME/.config"
-
 RAW="https://raw.githubusercontent.com/bhuvan0x/Mordern_Gaming_Clock/main"
 mkdir -p "$APP_DIR" "$AUTOSTART" "$HOME/.config"
 for file in main.qml config.js wallpaper-theme.js start.sh detect-wallpaper-theme.sh; do
