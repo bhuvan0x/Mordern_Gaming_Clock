@@ -177,7 +177,7 @@ Window {
         anchors.fill: parent
         z: 10
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        cursorShape: pressed && mouse.button === Qt.LeftButton ? Qt.ClosedHandCursor : Qt.OpenHandCursor
+        cursorShape: pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
         onPressed: function(mouse) {
             if (mouse.button === Qt.LeftButton) {
                 root.dragOrigin = Qt.point(mouse.x, mouse.y)
@@ -241,6 +241,7 @@ Window {
                         Label { text: "Time zone"; color: "#E2E8F0" }
                         ComboBox {
                             width: parent.width
+                            editable: true
                             model: [
                                 "Asia/Kolkata", "Asia/Tokyo", "Asia/Seoul", "Asia/Shanghai",
                                 "Asia/Singapore", "Asia/Dubai", "Asia/Riyadh", "Asia/Jerusalem",
@@ -251,6 +252,7 @@ Window {
                             ]
                             currentIndex: Math.max(0, model.indexOf(prefs.timeZone))
                             onActivated: prefs.timeZone = currentText
+                            onAccepted: prefs.timeZone = editText.trim()
                         }
                         Label { text: "Language / regional format"; color: "#E2E8F0" }
                         ComboBox {
@@ -258,6 +260,7 @@ Window {
                             model: ["en-IN", "en-GB", "en-US", "ja-JP", "ru-RU", "fr-FR", "de-DE", "es-ES"]
                             currentIndex: Math.max(0, model.indexOf(prefs.localeName))
                             onActivated: prefs.localeName = currentText
+                            onAccepted: prefs.localeName = editText.trim()
                         }
                         CheckBox {
                             text: "24-hour time"
