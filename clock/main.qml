@@ -257,6 +257,7 @@ Window {
                         Label { text: "Language / regional format"; color: "#E2E8F0" }
                         ComboBox {
                             width: parent.width
+                            editable: true
                             model: ["en-IN", "en-GB", "en-US", "ja-JP", "ru-RU", "fr-FR", "de-DE", "es-ES"]
                             currentIndex: Math.max(0, model.indexOf(prefs.localeName))
                             onActivated: prefs.localeName = currentText
