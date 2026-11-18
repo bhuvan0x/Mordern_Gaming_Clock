@@ -48,18 +48,19 @@ proot-distro login --isolated debian -- /bin/bash -lc '
 '
 
 echo "== Deploying the configurable clock =="
-proot-distro login --isolated --user prime debian -- /bin/bash -s -- "$SOURCE_DIR" <<'DEBIAN'
+proot-distro login --isolated --user prime debian -- /bin/bash -s <<'DEBIAN'
 set -Eeuo pipefail
-SOURCE_DIR="$1"
 APP_DIR="$HOME/.local/share/modern-gaming-clock"
 AUTOSTART="$HOME/.config/autostart"
 mkdir -p "$APP_DIR" "$AUTOSTART" "$HOME/.config"
 
-install -m 0644 "$SOURCE_DIR/clock/main.qml" "$APP_DIR/main.qml"
-install -m 0644 "$SOURCE_DIR/clock/config.js" "$APP_DIR/config.js"
-install -m 0644 "$SOURCE_DIR/clock/wallpaper-theme.js" "$APP_DIR/wallpaper-theme.js"
-install -m 0755 "$SOURCE_DIR/clock/start.sh" "$APP_DIR/start.sh"
-install -m 0755 "$SOURCE_DIR/clock/detect-wallpaper-theme.sh" "$APP_DIR/detect-wallpaper-theme.sh"
+RAW="https://raw.githubusercontent.com/bhuvan0x/Mordern_Gaming_Clock/main"
+mkdir -p "$APP_DIR" "$AUTOSTART" "$HOME/.config"
+for file in main.qml config.js wallpaper-theme.js start.sh detect-wallpaper-theme.sh; do
+  curl -fsSL "$RAW/clock/$file" -o "$APP_DIR/$file"
+done
+chmod 0755 "$APP_DIR/start.sh" "$APP_DIR/detect-wallpaper-theme.sh"
+chmod 0644 "$APP_DIR/main.qml" "$APP_DIR/config.js" "$APP_DIR/wallpaper-theme.js"
 
 cat > "$AUTOSTART/modern-gaming-clock.desktop" <<'AUTOSTART'
 [Desktop Entry]
