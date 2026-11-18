@@ -4,7 +4,7 @@ APP_DIR="/home/prime/.local/share/modern-gaming-clock"
 THEME_FILE="$APP_DIR/wallpaper-theme.js"
 wallpaper=""
 if command -v xfconf-query >/dev/null 2>&1; then
-  wallpaper="$(xfconf-query -c xfce4-desktop -lv 2>/dev/null | awk '$1 ~ /image-path$/ { $1=""; sub(/^[[:space:]]+/, ""); print; exit }' || true)"
+  wallpaper="$(xfconf-query -c xfce4-desktop -lv 2>/dev/null | awk '$1 ~ /(last-image|image-path)$/ { $1=""; sub(/^[[:space:]]+/, ""); print; exit }' || true)"
 fi
 color="#FFFFFF"
 if [[ -n "$wallpaper" && -f "$wallpaper" ]] && /usr/bin/python3 - "$wallpaper" <<'PY' >/tmp/modern-clock-color.$$
